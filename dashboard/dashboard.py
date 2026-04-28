@@ -13,6 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import warnings
+import os
 
 warnings.filterwarnings("ignore")
 
@@ -32,7 +33,11 @@ HIGHLIGHT = "#F24236"
 # ── Load data ───────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")
+    file_path = os.path.join(os.path.dirname(__file__), "main_data.csv")
+    if not os.path.exists(file_path):
+        st.error(f"File 'main_data.csv' tidak ditemukan di: {file_path}")
+        st.stop()
+    df = pd.read_csv(file_path)
     df["customer_city"] = df["customer_city"].str.strip().str.lower()
     df_unique = df.drop_duplicates(
         subset="customer_unique_id", keep="first"
