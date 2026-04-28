@@ -32,7 +32,7 @@ HIGHLIGHT = "#F24236"
 # ── Load data ───────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")  # pastikan path sesuai
+    df = pd.read_csv("main_data.csv")
     df["customer_city"] = df["customer_city"].str.strip().str.lower()
     df_unique = df.drop_duplicates(
         subset="customer_unique_id", keep="first"
